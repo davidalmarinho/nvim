@@ -1,3 +1,7 @@
+-- Nvim-tree settings
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Install packer
 local install_path = vim.fn.stdpath 'data' .. '/site/pack/packer/start/packer.nvim'
 local is_bootstrap = false
@@ -42,6 +46,14 @@ require('packer').startup(function(use)
     'nvim-treesitter/nvim-treesitter-textobjects',
     after = 'nvim-treesitter',
   }
+
+ use {
+   'nvim-tree/nvim-tree.lua',
+   requires = {
+     'nvim-tree/nvim-web-devicons',
+   },
+   tag = 'nightly'
+ }
 
   -- Git related plugins
   use 'tpope/vim-fugitive'
@@ -99,8 +111,9 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 vim.o.hlsearch = false
 
 -- Make line numbers default
--- vim.wo.number = true
+vim.wo.number = true
 vim.wo.relativenumber = true
+-- vim.wo.setnumber = true
 
 -- Enable mouse mode
 vim.o.mouse = 'a'
@@ -133,6 +146,26 @@ vim.o.completeopt = 'menuone,noselect'
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- nvim.tree
+vim.opt.termguicolors = true
+require("nvim-tree").setup({
+    sort_by = "case_sensitive",
+    view = {
+        width = 30,
+        mappings = {
+            list = {
+                { key = "u", action = "dir_up"},
+            },
+        },
+    },
+    renderer = {
+        group_empty = true,
+    },
+    filters = {
+        dotfiles = true,
+    },
+})
+
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
@@ -164,6 +197,8 @@ vim.keymap.set( 'n', '<C-j>', ':wincmd j<CR>', { noremap = true, silent = true }
 -- Telescope
 vim.keymap.set( 'n', '<F35>', ':Telescope<CR>', { noremap = true, silent = true })
 vim.keymap.set( 'i', '<F35>', '<ESC>:Telescope<CR>', { noremap = true, silent = true })
+-- NerdTREE
+vim.keymap.set( 'n', '<C-n>', '<cmd>:NvimTreeToggle<CR>', { noremap = true, silent = true })
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
@@ -224,6 +259,20 @@ require('telescope').setup {
       },
     },
   },
+}
+
+require 'nvim-tree'.setup {
+  update_focused_file = {
+    enable = true,
+  },
+  diagnostics = {
+    enable = true;
+  }
+}
+require 'nvim-web-devicons'.setup {
+  color_icons = true;
+  default = true;
+  strict = true;
 }
 
 -- Enable telescope fzf native, if installed

@@ -30,6 +30,11 @@ require('packer').startup(function(use)
     },
   }
 
+  use { -- Auto-pairs
+    "windwp/nvim-autopairs",
+    config = function() require("nvim-autopairs").setup {} end
+  }
+
   use { -- Autocompletion
     'hrsh7th/nvim-cmp',
     requires = { 'hrsh7th/cmp-nvim-lsp', 'L3MON4D3/LuaSnip', 'saadparwaiz1/cmp_luasnip' },
@@ -164,6 +169,11 @@ require("nvim-tree").setup({
     filters = {
         dotfiles = true,
     },
+})
+
+-- auto-pairs
+require('nvim-autopairs').setup({
+  disable_filetype = { "TelescopePrompt" , "vim" },
 })
 
 -- Keymaps for better default experience
@@ -507,4 +517,5 @@ cmp.setup {
 vim.bo.tabstop     = 4 --tabsize
 vim.bo.shiftwidth  = 4 --size of indentation
 vim.bo.softtabstop = 4
+vim.bo.autoindent = true
 -- vim.bo.expandtab   = true --use spaces insetad tabs

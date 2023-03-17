@@ -52,6 +52,15 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
+  use { -- Auto comments
+    "danymat/neogen",
+    config = function()
+      require('neogen').setup {}
+    end,
+    requires = "nvim-treesitter/nvim-treesitter",
+    -- tag = "*"
+  }
+
  use {
    'nvim-tree/nvim-tree.lua',
    requires = {
@@ -171,6 +180,13 @@ require("nvim-tree").setup({
     },
 })
 
+require("packer").startup(
+  function()
+    use "lukas-reineke/virt-column.nvim"
+  end
+)
+require("virt-column").setup()
+
 -- auto-pairs
 require('nvim-autopairs').setup({
   disable_filetype = { "TelescopePrompt" , "vim" },
@@ -185,11 +201,11 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set( 'i', '<C-q>', '<ESC>:wq<CR><ESC>', { noremap = true, silent = true })
 vim.keymap.set( 'n', '<C-q>', ':wq<CR>', { noremap = true, silent = true })
 -- Save files
-vim.keymap.set( 'i', '<C-s>', '<ESC>:w<CR><ESC>:startinsert<CR>', { noremap = true, silent = true })
+vim.keymap.set( 'i', '<C-s>', '<ESC>:w<CR>l<ESC>:startinsert<CR>', { noremap = true, silent = true })
 vim.keymap.set( 'n', '<C-s>', ':w<CR>', { noremap = true, silent = true })
 -- Undo (Needs 'stty susp ""' in the end of the .bashrc file)
 vim.keymap.set( 'n', '<C-z>', ':u<CR>', { noremap = true, silent = true })
-vim.keymap.set( 'i', '<C-z>', '<ESC>:u<CR><ESC>:startinsert<CR>', { noremap = true, silent = true })
+vim.keymap.set( 'i', '<C-z>', '<ESC>:u<CR>l<ESC>:startinsert<CR>', { noremap = true, silent = true })
 -- Move lines
 vim.keymap.set( 'n', '<A-j>', ':m +1<CR>', { noremap = true, silent = true })
 vim.keymap.set( 'n', '<A-k>', ':m -2<CR>', { noremap = true, silent = true })
@@ -518,4 +534,7 @@ vim.bo.tabstop     = 4 --tabsize
 vim.bo.shiftwidth  = 4 --size of indentation
 vim.bo.softtabstop = 4
 vim.bo.autoindent = true
--- vim.bo.expandtab   = true --use spaces insetad tabs
+vim.bo.expandtab   = true --use spaces insetad tabs
+
+-- Set margin of 80 characters
+vim.wo.colorcolumn = "80"

@@ -30,6 +30,19 @@ require('packer').startup(function(use)
     },
   }
 
+  -- Auto-save
+  use({
+	"Pocco81/auto-save.nvim",
+	config = function()
+		 require("auto-save").setup {
+			-- your config goes here
+			-- or just leave it empty :)
+		 }
+	end,
+  })
+
+  use "lukas-reineke/virt-column.nvim"
+
   use { -- Auto-pairs
     "windwp/nvim-autopairs",
     config = function() require("nvim-autopairs").setup {} end
@@ -85,6 +98,10 @@ require('packer').startup(function(use)
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make', cond = vim.fn.executable 'make' == 1 }
+
+
+-- Colorschemes
+  use { "ellisonleao/gruvbox.nvim" }
 
   -- Add custom plugins to packer from ~/.config/nvim/lua/custom/plugins.lua
   local has_plugins, plugins = pcall(require, 'custom.plugins')
@@ -148,7 +165,8 @@ vim.wo.signcolumn = 'yes'
 
 -- Set colorscheme
 vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+--vim.cmd [[colorscheme onedark]]
+vim.cmd [[colorscheme gruvbox]]
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
@@ -180,11 +198,6 @@ require("nvim-tree").setup({
     },
 })
 
-require("packer").startup(
-  function()
-    use "lukas-reineke/virt-column.nvim"
-  end
-)
 require("virt-column").setup()
 
 -- auto-pairs
@@ -246,7 +259,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('lualine').setup {
   options = {
     icons_enabled = false,
-    theme = 'onedark',
+    theme = 'gruvbox',
     component_separators = '|',
     section_separators = '',
   },
@@ -441,9 +454,9 @@ end
 --  Add any additional override configuration in the following tables. They will be passed to
 --  the `settings` field of the server config. You must look up that documentation yourself.
 local servers = {
-  -- clangd = {},
+  clangd = {},
   -- gopls = {},
-  -- pyright = {},
+  pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
 
@@ -452,7 +465,7 @@ local servers = {
   --     workspace = { checkThirdParty = false },
   --     telemetry = { enable = false },
   --   },
-  --},
+  -- },
 }
 
 -- Setup neovim lua configuration
@@ -528,12 +541,35 @@ cmp.setup {
   },
 }
 
+-- Custom Snippets
+local func = luasnip.function_node
+local snip = luasnip.snippet
+local text = luasnip.text_node
+-- local mainCFunc = function() return {int main()} end
+luasnip.add_snippets(nil, {
+  all = {
+        snip({
+            trig = "main",
+            namr = "C main function",
+            dscr = "C main function",
+        }, {
+            text({
+                "int main(int argc, const char* argv[])",
+                "{",
+                "    return 0;",
+                "}"
+            }),
+        }),
+    },
+})
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 vim.bo.tabstop     = 4 --tabsize
 vim.bo.shiftwidth  = 4 --size of indentation
 vim.bo.softtabstop = 4
-vim.bo.autoindent = true
+-- vim.bo.autoindent = true
+vim.bo.smartindent = true
 vim.bo.expandtab   = true --use spaces insetad tabs
 
 -- Set margin of 80 characters

@@ -43,6 +43,8 @@ require('packer').startup(function(use)
 
   use "lukas-reineke/virt-column.nvim"
 
+    use { "tikhomirov/vim-glsl" }
+
   use { -- Auto-pairs
     "windwp/nvim-autopairs",
     config = function() require("nvim-autopairs").setup {} end
@@ -232,8 +234,8 @@ vim.keymap.set( 'i', '<C-z>', '<ESC>:u<CR>l<ESC>:startinsert<CR>', { noremap = t
 vim.keymap.set( 'n', '<A-j>', ':m +1<CR>', { noremap = true, silent = true })
 vim.keymap.set( 'n', '<A-k>', ':m -2<CR>', { noremap = true, silent = true })
 -- Open terminal
-vim.keymap.set( 'n', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR>', { noremap = true, silent = true })
-vim.keymap.set( 'i', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = true })
+vim.keymap.set( 'n', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR>', { noremap = true, silent = false })
+vim.keymap.set( 'i', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
 -- Split windows
 vim.keymap.set( 'n', '<C-\\>', ':split<CR>', { noremap = true, silent = true })
 vim.keymap.set( 'n', '<A-\\>', ':vertical split<CR>', { noremap = true, silent = true })
@@ -254,6 +256,18 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 
 vim.keymap.set('n', '<F6>', '<ESC>:set background=light<CR>', { noremap = true, silent = true })
 vim.keymap.set('n', '<F5>', '<ESC>:set background=dark<CR>', { noremap = true, silent = true })
+
+-- The line beneath this is called `modeline`. See `:help modeline`
+-- vim: ts=2 sts=2 sw=2 et
+vim.o.tabstop     = 4 --tabsize
+vim.o.shiftwidth  = 4 --size of indentation
+-- vim.bo.softtabstop = 4
+-- vim.bo.autoindent = true
+vim.o.smartindent = true
+vim.o.expandtab   = true --use spaces insetad tabs
+
+-- Set margin of 80 characters
+vim.wo.colorcolumn = "80"
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -318,8 +332,9 @@ require 'nvim-tree'.setup {
   },
   diagnostics = {
     enable = true;
-  }
+  },
 }
+
 require 'nvim-web-devicons'.setup {
   color_icons = true;
   default = true;
@@ -350,7 +365,8 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'vim' },
+  -- ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'vim' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'vim' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -624,14 +640,3 @@ vim.api.nvim_set_keymap(
 
 vim.api.nvim_set_keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", { noremap = true })
 
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
-vim.bo.tabstop     = 4 --tabsize
-vim.bo.shiftwidth  = 4 --size of indentation
-vim.bo.softtabstop = 4
--- vim.bo.autoindent = true
-vim.bo.smartindent = true
-vim.bo.expandtab   = true --use spaces insetad tabs
-
--- Set margin of 80 characters
-vim.wo.colorcolumn = "80"

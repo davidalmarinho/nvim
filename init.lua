@@ -259,8 +259,8 @@ vim.keymap.set('n', '<F5>', '<ESC>:set background=dark<CR>', { noremap = true, s
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-vim.o.tabstop     = 4 --tabsize
-vim.o.shiftwidth  = 4 --size of indentation
+vim.o.tabstop     = 2 --tabsize
+vim.o.shiftwidth  = 2 --size of indentation
 -- vim.bo.softtabstop = 4
 -- vim.bo.autoindent = true
 vim.o.smartindent = true

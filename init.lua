@@ -4,6 +4,7 @@
 -- | Installed Plugins: <- Here you find the installed plugins.
 -- | Current Theme: <- Here can be found the current theme for neovim.
 -- | Neovim config: <- Here can be found some configs for neovim, like the indent spaces.
+-- | Custom keybinds: <- Here u can the custom keybinds.
 -- --------------------------------------------------------------
 
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -247,6 +248,10 @@ vim.o.background="dark"
 vim.cmd [[
   colorscheme nord
 ]]
+
+-- Custom keybinds:
+vim.keymap.set( 'n', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR>', { noremap = true, silent = false })
+vim.keymap.set( 'i', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
 
 -- Neovim config:
 vim.opt.colorcolumn = '80,100'

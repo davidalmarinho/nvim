@@ -155,8 +155,8 @@ require("bufferline").setup{}
 local servers = {
   clangd = {},
   -- gopls = {},
-  -- pyright = {},
-  -- rust_analyzer = {},
+  pyright = {},
+  rust_analyzer = {}, -- In order to work, is needed to run: 'rustup component add rust-analyzer'
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
@@ -250,8 +250,8 @@ vim.cmd [[
 ]]
 
 -- Custom keybinds:
-vim.keymap.set( 'n', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR>', { noremap = true, silent = false })
-vim.keymap.set( 'i', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
+vim.keymap.set( 'n', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
+vim.keymap.set( 'i', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
 
 -- Neovim config:
 vim.opt.colorcolumn = '80,100'

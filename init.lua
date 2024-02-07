@@ -5,6 +5,11 @@
 -- | Current Theme: <- Here can be found the current theme for neovim.
 -- | Neovim config: <- Here can be found some configs for neovim, like the indent spaces.
 -- | Custom keybinds: <- Here u can the custom keybinds.
+-- |
+-- | ---
+-- | NOTE: If you are using neovim, you probably wnat to install
+-- |       xclip so you can copy text from neovim to others applications.
+-- |       yay xclip.
 -- --------------------------------------------------------------
 
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -30,8 +35,8 @@ vim.opt.rtp:prepend(lazypath)
 -- Installed Plugins:
 require("lazy").setup({
 	'jiangmiao/auto-pairs', -- Auto pairs
-	'tpope/vim-repeat',
   'shaunsingh/nord.nvim', -- Nord color scheme
+	'lervag/vimtex',
 	{'akinsho/bufferline.nvim', version = "*",
 	dependencies = 'nvim-tree/nvim-web-devicons'}, -- LineBuffer
 
@@ -46,7 +51,7 @@ require("lazy").setup({
         })
     end
 	},
-	
+
 	-- Markdown Preview
 	{
 	"iamcco/markdown-preview.nvim",
@@ -90,6 +95,15 @@ require("lazy").setup({
       'rafamadriz/friendly-snippets',
     },
   },
+	{
+		-- Telescope
+		-- init.lua:
+    {
+    'nvim-telescope/telescope.nvim', tag = '0.1.5',
+		-- or                              , branch = '0.1.x',
+      dependencies = { 'nvim-lua/plenary.nvim' }
+    }
+	}
 })
 
 -- [[ Configure LSP ]]
@@ -252,6 +266,8 @@ vim.cmd [[
 -- Custom keybinds:
 vim.keymap.set( 'n', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
 vim.keymap.set( 'i', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
+vim.keymap.set( 'n', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
+vim.keymap.set( 'i', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
 
 -- Neovim config:
 vim.opt.colorcolumn = '80,100'

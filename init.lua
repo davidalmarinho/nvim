@@ -39,6 +39,11 @@ require("lazy").setup({
 	'lervag/vimtex',
 	{'akinsho/bufferline.nvim', version = "*",
 	dependencies = 'nvim-tree/nvim-web-devicons'}, -- LineBuffer
+	
+	-- Indent Blankline
+	{ 
+		"lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} 
+	},
 
 	-- auto-save
 		{
@@ -46,7 +51,7 @@ require("lazy").setup({
 		config = function()
 						 require("auto-save").setup {
 						 -- your config goes here
-			 			 -- or just leave it empty :)
+						 -- or just leave it empty :)
 		}
 		end,
 	},
@@ -289,7 +294,7 @@ vim.o.shiftwidth  = 2 --size of indentation
 -- vim.bo.softtabstop = 4
 -- vim.bo.autoindent = true
 vim.o.smartindent = true
-vim.o.expandtab   = false --use spaces insetad tabs
+vim.o.expandtab   = true --use spaces insetad tabs
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'

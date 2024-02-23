@@ -40,6 +40,17 @@ require("lazy").setup({
 	{'akinsho/bufferline.nvim', version = "*",
 	dependencies = 'nvim-tree/nvim-web-devicons'}, -- LineBuffer
 
+	-- auto-save
+		{
+		"Pocco81/auto-save.nvim",
+		config = function()
+						 require("auto-save").setup {
+						 -- your config goes here
+			 			 -- or just leave it empty :)
+		}
+		end,
+	},
+
 	-- Vim Surrounding.
 	{
 		"kylechui/nvim-surround",

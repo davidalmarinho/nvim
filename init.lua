@@ -264,10 +264,10 @@ vim.cmd [[
 ]]
 
 -- Custom keybinds:
-vim.keymap.set( 'n', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
-vim.keymap.set( 'i', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
-vim.keymap.set( 'n', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
-vim.keymap.set( 'i', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
+vim.keymap.set( 'n', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
+vim.keymap.set( 'i', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
+vim.keymap.set( 'n', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR<ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
+vim.keymap.set( 'i', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR<ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
 
 -- Neovim config:
 vim.opt.colorcolumn = '80,100'

@@ -36,6 +36,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	'jiangmiao/auto-pairs', -- Auto pairs
   'shaunsingh/nord.nvim', -- Nord color scheme
+  'navarasu/onedark.nvim', -- One Dark themes.
 	'lervag/vimtex',
 	{'akinsho/bufferline.nvim', version = "*",
 	dependencies = 'nvim-tree/nvim-web-devicons'}, -- LineBuffer
@@ -139,7 +140,8 @@ local on_attach = function(_, bufnr)
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
-	nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+	-- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+	nmap('<F2>', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
@@ -223,7 +225,6 @@ mason_lspconfig.setup_handlers {
   end,
 }
 
-
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 local cmp = require 'cmp'
@@ -276,14 +277,14 @@ cmp.setup {
 vim.cmd('syntax enable')
 vim.o.background="dark"
 vim.cmd [[
-  colorscheme nord
+  colorscheme onedark
 ]]
 
 -- Custom keybinds:
 vim.keymap.set( 'n', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
 vim.keymap.set( 'i', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
-vim.keymap.set( 'n', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR<ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
-vim.keymap.set( 'i', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR<ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
+vim.keymap.set( 'n', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
+vim.keymap.set( 'i', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
 
 -- Neovim config:
 vim.opt.colorcolumn = '80,100'

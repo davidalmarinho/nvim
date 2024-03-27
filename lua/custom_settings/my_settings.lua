@@ -38,6 +38,26 @@ function M.set_config()
 
   -- Sync clipboard between OS and Neovim.
   vim.o.clipboard = 'unnamedplus'
+
+  -- Auto tab size according specific language.
+  -- Function to set buffer-local options
+  local function set_buffer_option(option, value)
+      vim.api.nvim_command('setlocal ' .. option .. '=' .. value)
+  end
+
+  vim.cmd [[
+    augroup BufferSettings
+      autocmd!
+        autocmd BufEnter *.py setlocal tabstop=4 shiftwidth=4
+        autocmd BufEnter *.java setlocal tabstop=4 shiftwidth=4
+        autocmd BufEnter *.c setlocal tabstop=4 shiftwidth=4
+        autocmd BufEnter *.cpp setlocal tabstop=4 shiftwidth=4
+        autocmd BufEnter *.rs setlocal tabstop=4 shiftwidth=4
+        autocmd BufEnter *.js setlocal tabstop=2 shiftwidth=2
+        autocmd BufEnter *.tex setlocal tabstop=2 shiftwidth=2
+        autocmd BufEnter *.lua setlocal tabstop=2 shiftwidth=2
+    augroup END
+  ]]
 end
 
 return M

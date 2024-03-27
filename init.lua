@@ -22,6 +22,7 @@ local nvim_cmp         = require('plugins.nvim_cmp')
 local which_key        = require('plugins.which_key')
 local vimtex           = require('plugins.vimtex')
 local bufferline       = require('plugins.bufferline')
+local nvim_java        = require('plugins.nvim_java')
 local custom_settings  = require('custom_settings.my_settings')
 
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -46,10 +47,11 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Installed Plugins:
 require("lazy").setup({
+  nvim_java.lazy_setup(),
   themes.lazy_setup(),
 	'jiangmiao/auto-pairs', -- Auto pairs
   vimtex.lazy_setup(),
-  bufferline.lazy_setup(),	
+  bufferline.lazy_setup(),
 	-- Indent Blankline
 	{ 
 		"lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} 
@@ -63,6 +65,8 @@ require("lazy").setup({
   nvim_cmp.lazy_setup(),
   telescope.lazy_setup(),
 })
+
+nvim_java.setup()
 
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = lsp.configure()

@@ -15,7 +15,13 @@ function M.lazy_setup()
 
         -- Useful status updates for LSP
         -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-        { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
+        { 'j-hui/fidget.nvim', tag = 'v1.4.0', opts =
+          {
+            progress = {
+              suppress_on_insert = true,   -- Suppress new messages while in insert mode
+            }
+	        }
+        },
 
         -- Additional lua configuration, makes nvim stuff amazing!
         'folke/neodev.nvim',

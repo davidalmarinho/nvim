@@ -12,6 +12,18 @@
 -- |       yay xclip.
 -- --------------------------------------------------------------
 
+local themes           = require('plugins.themes')
+local markdown_preview = require('plugins.markdown_preview')
+local lsp              = require('plugins.lsp')
+local telescope        = require('plugins.telescope')
+local nvim_surround    = require('plugins.nvim_surround')
+local auto_save        = require('plugins.auto_save')
+local nvim_cmp         = require('plugins.nvim_cmp')
+local which_key        = require('plugins.which_key')
+local vimtex           = require('plugins.vimtex')
+local bufferline       = require('plugins.bufferline')
+local custom_settings  = require('custom_settings.my_settings')
+
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -34,151 +46,29 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Installed Plugins:
 require("lazy").setup({
+  themes.lazy_setup(),
 	'jiangmiao/auto-pairs', -- Auto pairs
-  'shaunsingh/nord.nvim', -- Nord color scheme
-  'navarasu/onedark.nvim', -- One Dark themes.
-	'lervag/vimtex',
-	{'akinsho/bufferline.nvim', version = "*",
-	dependencies = 'nvim-tree/nvim-web-devicons'}, -- LineBuffer
-	
+  vimtex.lazy_setup(),
+  bufferline.lazy_setup(),	
 	-- Indent Blankline
 	{ 
 		"lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} 
 	},
 
-	-- auto-save
-		{
-		"Pocco81/auto-save.nvim",
-		config = function()
-						 require("auto-save").setup {
-						 -- your config goes here
-						 -- or just leave it empty :)
-		}
-		end,
-	},
-
-	-- Vim Surrounding.
-	{
-		"kylechui/nvim-surround",
-    version = "*", -- Use for stability; omit to use `main` branch for the latest features
-    event = "VeryLazy",
-    config = function()
-        require("nvim-surround").setup({
-            -- Configuration here, or leave empty to use defaults
-        })
-    end
-	},
-
-	-- Markdown Preview
-	{
-	"iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function() vim.fn["mkdp#util#install"]() end,
-	},
-
-	-- Language Server
-	-- NOTE: This is where your plugins related to LSP can be installed.
-  --  The configuration is done below. Search for lspconfig to find it below.
-  {
-    -- LSP Configuration & Plugins
-    'neovim/nvim-lspconfig',
-    dependencies = {
-      -- Automatically install LSPs to stdpath for neovim
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
-
-      -- Additional lua configuration, makes nvim stuff amazing!
-      'folke/neodev.nvim',
-    },
-  },
-	{ 'folke/which-key.nvim', opts = {} }, -- Helps remembering commands.
-	{
-    -- Autocompletion
-		'hrsh7th/nvim-cmp',
-    dependencies = {
-      -- Snippet Engine & its associated nvim-cmp source
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-
-      -- Adds LSP completion capabilities
-      'hrsh7th/cmp-nvim-lsp',
-
-      -- Adds a number of user-friendly snippets
-      'rafamadriz/friendly-snippets',
-    },
-  },
-	{
-		-- Telescope
-		-- init.lua:
-    {
-    'nvim-telescope/telescope.nvim', tag = '0.1.5',
-		-- or                              , branch = '0.1.x',
-      dependencies = { 'nvim-lua/plenary.nvim' }
-    }
-	}
+  auto_save.lazy_setup(),
+  nvim_surround.lazy_setup(),
+  markdown_preview.lazy_setup(),
+  lsp.lazy_setup(),
+  which_key.lazy_setup(),
+  nvim_cmp.lazy_setup(),
+  telescope.lazy_setup(),
 })
 
--- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-  --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
-  local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
-
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
-  end
-
-	-- nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
-	nmap('<F2>', vim.lsp.buf.rename, '[R]e[n]ame')
-  nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
-
-  -- See `:help K` for why this keymap
-  nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-  nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-  -- Lesser used LSP functionality
-  nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-  nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-  nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-  nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, '[W]orkspace [L]ist Folders')
-
- -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    vim.lsp.buf.format()
-  end, { desc = 'Format current buffer with LSP' })
-end
+local on_attach = lsp.configure()
 
 -- document existing key chains
-require('which-key').register {
-  ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-  ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-  ['<leader>g'] = { name = '[G]it', _ = 'which_key_ignore' },
-  ['<leader>h'] = { name = 'More git', _ = 'which_key_ignore' },
-  ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-  ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-  ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
-}
+which_key.register()
 
 require('mason').setup()
 require('mason-lspconfig').setup()
@@ -225,87 +115,14 @@ mason_lspconfig.setup_handlers {
   end,
 }
 
--- [[ Configure nvim-cmp ]]
--- See `:help cmp`
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
-require('luasnip.loaders.from_vscode').lazy_load()
-luasnip.config.setup {}
-
-cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert {
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete {},
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.locally_jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 's' }),
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  },
-}
+nvim_cmp.configure()
 
 -- Current Theme:
-vim.cmd('syntax enable')
-vim.o.background="dark"
-vim.cmd [[
-  colorscheme onedark
-]]
+themes.set_theme('onedark')
+themes.set_dark()
 
 -- Custom keybinds:
-vim.keymap.set( 'n', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
-vim.keymap.set( 'i', '<C-F12>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
-vim.keymap.set( 'n', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
-vim.keymap.set( 'i', '<F36>', '<ESC>:split<CR><ESC>:wincmd j<CR><ESC>:term<CR><ESC>:res -13<CR><ESC>:startinsert<CR>', { noremap = true, silent = false })
+custom_settings.set_keybinds()
 
 -- Neovim config:
-vim.opt.colorcolumn = '80,100'
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
-vim.o.tabstop     = 2 --tabsize
-vim.o.shiftwidth  = 2 --size of indentation
--- vim.bo.softtabstop = 4
--- vim.bo.autoindent = true
-vim.o.smartindent = true
-vim.o.expandtab   = true --use spaces insetad tabs
-
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
-
--- Make line numbers default
-vim.wo.number = true
-vim.wo.relativenumber = true
-
--- Save undo history
-vim.o.undofile = true
-
--- Sync clipboard between OS and Neovim.
-vim.o.clipboard = 'unnamedplus'
+custom_settings.set_config()

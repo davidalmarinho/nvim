@@ -12,7 +12,9 @@ function M.set_keybinds()
   vim.keymap.set( 'n', '<F36>', open_term_action, { noremap = true, silent = false })
   vim.keymap.set( 'i', '<F36>', open_term_action, { noremap = true, silent = false })
 
-  vim.keymap.set( 'n', '<leader>p', '<ESC>:Telescope find_files<CR>', { noremap = true, silent = false })
+  vim.keymap.set( 'n', '<Leader>p', '<ESC>:Telescope find_files<CR>', { noremap = true, silent = false })
+
+  vim.keymap.set( 't', '<Esc>', '<C-\\><C-n>' )
 end
 
 function M.set_config()
@@ -39,12 +41,10 @@ function M.set_config()
   -- Sync clipboard between OS and Neovim.
   vim.o.clipboard = 'unnamedplus'
 
-  -- Auto tab size according specific language.
-  -- Function to set buffer-local options
-  local function set_buffer_option(option, value)
-      vim.api.nvim_command('setlocal ' .. option .. '=' .. value)
-  end
+  -- Check spelllang
+  vim.o.spelllang = "en_us"
 
+  -- Auto tab size according specific language.
   vim.cmd [[
     augroup BufferSettings
       autocmd!

@@ -7,7 +7,7 @@
 -- | Custom keybinds: <- Here u can the custom keybinds.
 -- |
 -- | ---
--- | NOTE: If you are using neovim, you probably wnat to install
+-- | NOTE: If you are using neovim, you probably want to install
 -- |       xclip so you can copy text from neovim to others applications.
 -- |       yay xclip.
 -- --------------------------------------------------------------

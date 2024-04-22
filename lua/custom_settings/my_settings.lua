@@ -15,6 +15,10 @@ function M.set_keybinds()
   vim.keymap.set( 'n', '<Leader>p', '<ESC>:Telescope find_files<CR>', { noremap = true, silent = false })
 
   vim.keymap.set( 't', '<Esc>', '<C-\\><C-n>' )
+
+  -- Change background color. 
+  vim.keymap.set( 'n', '<F8>', '<ESC>:set background=dark<CR>', { noremap = true, silent = false })
+  vim.keymap.set( 'n', '<F9>', '<ESC>:set background=light<CR>', { noremap = true, silent = false })
 end
 
 function M.set_config()
@@ -51,11 +55,14 @@ function M.set_config()
         autocmd BufEnter *.py setlocal tabstop=4 shiftwidth=4
         autocmd BufEnter *.java setlocal tabstop=4 shiftwidth=4
         autocmd BufEnter *.c setlocal tabstop=4 shiftwidth=4
+        autocmd BufEnter *.h setlocal tabstop=4 shiftwidth=4
         autocmd BufEnter *.cpp setlocal tabstop=4 shiftwidth=4
+        autocmd BufEnter *.hpp setlocal tabstop=4 shiftwidth=4
         autocmd BufEnter *.rs setlocal tabstop=4 shiftwidth=4
         autocmd BufEnter *.js setlocal tabstop=2 shiftwidth=2
         autocmd BufEnter *.tex setlocal tabstop=2 shiftwidth=2
         autocmd BufEnter *.lua setlocal tabstop=2 shiftwidth=2
+        autocmd BufEnter *.glsl setlocal tabstop=4 shiftwidth=4
     augroup END
   ]]
 end

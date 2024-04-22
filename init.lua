@@ -5,6 +5,10 @@
 -- | Current Theme: <- Here can be found the current theme for neovim.
 -- | Neovim config: <- Here can be found some configs for neovim, like the indent spaces.
 -- | Custom keybinds: <- Here u can the custom keybinds.
+-- | 
+-- | If you need Neogen to generate some function's documentation and it is
+-- | not working, execute:
+-- | :TSInstall <language_to_install>
 -- |
 -- | ---
 -- | NOTE: If you are using neovim, you probably want to install
@@ -23,6 +27,7 @@ local which_key        = require('plugins.which_key')
 local vimtex           = require('plugins.vimtex')
 local bufferline       = require('plugins.bufferline')
 local nvim_java        = require('plugins.nvim_java')
+local gitsigns         = require('plugins.gitsigns')
 local custom_settings  = require('custom_settings.my_settings')
 
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -64,9 +69,17 @@ require("lazy").setup({
   which_key.lazy_setup(),
   nvim_cmp.lazy_setup(),
   telescope.lazy_setup(),
+  gitsigns.lazy_setup(),
+  'tikhomirov/vim-glsl',
+  {
+    'danymat/neogen',
+     config = true,
+  },
+  'nvim-treesitter/nvim-treesitter'
 })
 
 nvim_java.setup()
+gitsigns.setup()
 
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = lsp.configure()
@@ -120,6 +133,12 @@ mason_lspconfig.setup_handlers {
 }
 
 nvim_cmp.configure()
+require('neogen').setup {
+    enabled = true,             --if you want to disable Neogen
+    input_after_comment = true, -- (default: true) automatic jump (with insert mode) on inserted annotation
+    -- jump_map = "<C-e>"       -- (DROPPED SUPPORT, see [here](#cycle-between-annotations) !) The keymap in order to jump in the annotation fields (in insert mode)
+}
+require('neogen').setup({ snippet_engine = "luasnip" })
 
 -- Current Theme:
 themes.set_theme('onedark')

@@ -63,6 +63,7 @@ function M.set_config()
         autocmd BufEnter *.tex setlocal tabstop=2 shiftwidth=2
         autocmd BufEnter *.lua setlocal tabstop=2 shiftwidth=2
         autocmd BufEnter *.glsl setlocal tabstop=4 shiftwidth=4
+        autocmd BufEnter *.go setlocal tabstop=4 shiftwidth=4
     augroup END
   ]]
 end

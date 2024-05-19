@@ -12,4 +12,29 @@ function M.lazy_setup()
   }
 end
 
+function M.setup()
+  require('telescope').setup({
+    prompt_prefix = "❯ ",
+    selection_caret = "❯ ",
+    defaults = {
+      file_ignore_patterns = {
+              "node_modules/.*",
+              "%.env",
+              "yarn.lock",
+              "package-lock.json",
+              "lazy-lock.json",
+              "init.sql",
+              "target/.*",
+              ".git/.*",
+              "out/.*",
+      },
+    },
+    extensions = {
+        file_browser = {
+            path = "%:p:h",
+        },
+    },
+  })
+end
+
 return M

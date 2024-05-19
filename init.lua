@@ -80,6 +80,7 @@ require("lazy").setup({
 
 nvim_java.setup()
 gitsigns.setup()
+telescope.setup()
 
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = lsp.configure()
@@ -93,7 +94,7 @@ require("bufferline").setup{}
 
 local servers = {
   clangd = {},
-  -- gopls = {},
+  gopls = {},
   pyright = {},
   rust_analyzer = {}, -- In order to work, is needed to run: 'rustup component add rust-analyzer'
   -- tsserver = {},
